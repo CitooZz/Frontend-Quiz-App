@@ -1,0 +1,69 @@
+<br />
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div class="alert alert-danger" *ngIf="errors.length > 0">
+        <p *ngFor="let error of errors">{{ error }}</p>
+      </div>
+      <div class="card">
+        <div class="card-header">Welcome!</div>
+        <div class="card-body">
+          <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+            <div class="form-group">
+              <label for="email">Email: </label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+                [ngClass]="
+                  !signInForm.get('email').valid && signInForm.get('email').touched
+                    ? 'form-control is-invalid'
+                    : 'form-control'
+                "
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="!signInForm.get('email').valid && signInForm.get('email').touched"
+              >
+                <div *ngIf="signInForm.get('email').hasError('required')">Email field required</div>
+                <div *ngIf="signInForm.get('email').hasError('email')">Email field invalid</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password: </label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                formControlName="password"
+                [ngClass]="
+                  !signInForm.get('password').valid && signInForm.get('password').touched
+                    ? 'form-control is-invalid'
+                    : 'form-control'
+                "
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="!signInForm.get('password').valid && signInForm.get('password').touched"
+              >
+                <div *ngIf="signInForm.get('password').hasError('required')">
+                  Password field required.
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Sign In</button> |
+              <button type="button" (click)="goToSignUp()" class="btn btn-success">
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
